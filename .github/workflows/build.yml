@@ -13,13 +13,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Android NDK
-        uses: android-actions/setup-android@v3
-
-      - name: Install NDK r25c
+      - name: Find preinstalled NDK
         run: |
-          echo "y" | sdkmanager "ndk;25.2.9519653"
-          echo "NDK_ROOT=$ANDROID_SDK_ROOT/ndk/25.2.9519653" >> $GITHUB_ENV
+          NDK_PATH=$(ls -d $ANDROID_SDK_ROOT/ndk/* 2>/dev/null | sort -V | tail -1)
+          if [ -z "$NDK_PATH" ]; then
+            echo "No NDK found, installing..."
+            echo "y" | $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager --licenses > /dev/null 2>&1 || true
+            $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager "ndk;25.2.9519653" > /dev/null
+            NDK_PATH="$ANDROID_SDK_ROOT/ndk/25.2.9519653"
+          fi
+          echo "NDK_ROOT=$NDK_PATH" >> $GITHUB_ENV
+          echo "Using NDK: $NDK_PATH"
 
       - name: Configure CMake
         run: |
