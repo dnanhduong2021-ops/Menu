@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This manifest is only needed if building as a standalone APK wrapper.
+     For .so injection into Minecraft APK, the manifest is Minecraft's own. -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.mcbe.esp">
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <application android:label="MCBE ESP"/>
+</manifest>
