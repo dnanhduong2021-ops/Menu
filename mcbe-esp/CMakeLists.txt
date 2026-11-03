@@ -9,9 +9,11 @@ include(FetchContent)
 FetchContent_Declare(
     Dobby
     GIT_REPOSITORY https://github.com/jmpews/Dobby.git
-    GIT_TAG        master
+    GIT_TAG        v2.0
 )
 set(DOBBY_DEBUG OFF CACHE BOOL "" FORCE)
+set(Plugin.SymbolResolver OFF CACHE BOOL "" FORCE)
+set(Plugin.ImportTableReplace OFF CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(Dobby)
 
 set(SRC
